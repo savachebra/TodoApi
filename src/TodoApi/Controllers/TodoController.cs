@@ -22,7 +22,7 @@ namespace TodoApi.Controllers
         }
 
         [HttpGet("{id}", Name = "GetTodo")]
-        public ActionResult GetById(string id)
+        public IActionResult GetById(string id)
         {
             var item = TodoItems.Find(id);
 
@@ -53,10 +53,23 @@ namespace TodoApi.Controllers
 
             var todo = TodoItems.Find(id);
 
-            if (item == null)
+            if (todo == null)
                 return HttpNotFound();
 
             TodoItems.Update(item);
+
+            return new NoContentResult();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            var todo = TodoItems.Find(id);
+
+            if (todo == null)
+                return HttpNotFound();
+
+            TodoItems.Remove(id);
 
             return new NoContentResult();
         }

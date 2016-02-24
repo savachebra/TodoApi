@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using TodoApi.Models;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +15,13 @@ namespace TodoApi.Controllers
     {
         [FromServices]
         public ITodoRepository TodoItems { get; set; }
+        [FromServices]
+        public ILogger<TodoController> Logger { get; set; }
 
         [HttpGet]
         public IEnumerable<TodoItem> GetAll()
         {
+            Logger.LogInformation("Get all");
             return TodoItems.GetAll();
         }
 
